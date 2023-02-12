@@ -1,11 +1,38 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from '@next/font/google'
-import styles from '@/styles/Home.module.css'
+import Head from "next/head";
+import Image from "next/image";
+import styles from "@/styles/Home.module.css";
+import {
+  Edit3,
+  Heart,
+  Package,
+  Briefcase,
+  MessageCircle,
+  Mail,
+  Linkedin,
+  GitHub,
+  Twitter,
+} from "react-feather";
+import { DevDotToArticle } from "@/types/devDotTo";
+import { Tooltip } from "react-tooltip";
 
-const inter = Inter({ subsets: ['latin'] })
+export const getStaticProps = async () => {
+  const res = await fetch("https://dev.to/api/articles?username=ajones_codes");
+  const articles = (await res.json()) as DevDotToArticle[];
+  // sort the articles by top public reactions and get the first 5
+  const trimmedArticles = articles
+    .filter((article) => !article.title.includes("Reddit"))
+    .sort((a, b) => {
+      return b.public_reactions_count - a.public_reactions_count;
+    })
+    .slice(0, 7);
+  return {
+    props: {
+      articles: trimmedArticles,
+    },
+  };
+};
 
-export default function Home() {
+export default function Home({ articles }: { articles: DevDotToArticle[] }) {
   return (
     <>
       <Head>
@@ -14,110 +41,213 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
-        <div className={styles.description}>
-          <p>
-            Get started by editing&nbsp;
-            <code className={styles.code}>pages/index.tsx</code>
-          </p>
+      <main className="text-left px-4 md:px-24 lg:px-36">
+        <div className="container pt-24 border-b-2">
+          <h1 className="text-6xl font-bold">Andrew Jones</h1>
+          <h2 className="text-2xl mt-4 mb-2">
+            Software Engineer | Problem Solver | Teacher | Speaker
+          </h2>
+        </div>
+        <div className="pt-12" id="content-grid">
+          <Edit3 size={48} className={"inline-block mr-24"} />
           <div>
-            <a
-              href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              By{' '}
-              <Image
-                src="/vercel.svg"
-                alt="Vercel Logo"
-                className={styles.vercelLogo}
-                width={100}
-                height={24}
-                priority
-              />
-            </a>
+            <h2 className="text-4xl mb-2">Writing</h2>
+            <ul>
+              {articles.map((article) => {
+                return (
+                  <li key={article.id} id={`article-${article.id}`}>
+                    <a
+                      href={article.canonical_url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-lg no-underline hover:underline"
+                    >
+                      {article.title}
+                    </a>
+                    <div className="flex mb-6">
+                      <Heart color="#aaa" size={18} className="m-1" />{" "}
+                      <span style={{ color: "#aaa" }} className="mr-2">
+                        {article.public_reactions_count} |{" "}
+                        {new Date(article.readable_publish_date)
+                          .toISOString()
+                          .substring(0, 10)}
+                      </span>
+                    </div>
+                    <Tooltip anchorId={`article-${article.id}`}>
+                      <div className="bg-black w-[300px] rounded-md">
+                        {article.cover_image ? (
+                          <Image
+                            src={article.cover_image}
+                            alt={"article image"}
+                            width={300}
+                            height={200}
+                            className="rounded-t-md"
+                          ></Image>
+                        ) : null}
+                        <div className="p-2">
+                          <p>{article.title}</p>
+                          <p className="text-gray-400">
+                            {article.reading_time_minutes} minute read
+                          </p>
+                        </div>
+                      </div>
+                    </Tooltip>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+          <Package size={48} className={"inline-block mr-24"} />
+          <div>
+            <h2 className="text-4xl mb-2">Projects</h2>
+            <ul>
+              <li className="mt-3 mb-5">
+                <h2 className="text-xl">COVID-19 Research</h2>
+                <p>
+                  I led a research project on the system dynamics of the global
+                  spread of COVID-19, which culminated in{" "}
+                  <a
+                    href="https://doi.org/10.1016/j.chaos.2020.110376"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    a paper published
+                  </a>{" "}
+                  in an Elsevier journal. I developed{" "}
+                  <a
+                    href="https://chaotic-covid19.vercel.app/"
+                    target="_blank"
+                    rel="noreferrer"
+                    id="covid-dashboard"
+                  >
+                    a data analysis dashboard
+                  </a>{" "}
+                  in JavaScript which the project centered around.
+                </p>
+                <Tooltip anchorId="covid-dashboard">
+                  <div className="bg-black w-[300px] rounded-md">
+                    <Image
+                      src={"/covid_dashboard.png"}
+                      alt={
+                        "COVID Dashboard screenshot showing graphs of COVID-19 data"
+                      }
+                      width={300}
+                      height={200}
+                      className="rounded-t-md"
+                    ></Image>
+                    <div className="p-2">
+                      <p>COVID-19 Research Dashboard</p>
+                      <p className="text-gray-400">built with React</p>
+                    </div>
+                  </div>
+                </Tooltip>
+              </li>
+              <li id="sharesheets-item" className="mb-5">
+                <h2 className="text-xl">ShareSheets</h2>
+                <p>
+                  ShareSheets allows users to share their contact information
+                  and social media accounts by creating and scanning QR codes.
+                  It is cross-platform (iPhone, iPad, and Android), and
+                  completely written in React Native using an Expo-managed
+                  workflow. Check it out on the{" "}
+                  <a href="https://apps.apple.com/tt/app/sharesheets/id1493143639">
+                    iOS App Store
+                  </a>{" "}
+                  or{" "}
+                  <a href="https://play.google.com/store/apps/details?id=com.aej11.sharesheets&hl=en_US&gl=US">
+                    Google Play Store.
+                  </a>
+                </p>
+                <Tooltip anchorId="sharesheets-item">
+                  <div className="bg-black w-[300px] rounded-md">
+                    <Image
+                      src={"/sharesheets.png"}
+                      alt={
+                        "Screenshots showing a contact sharing app with a QR scanner and fields for different social media accounts"
+                      }
+                      width={300}
+                      height={200}
+                      className="rounded-t-md"
+                    ></Image>
+                    <div className="p-2">
+                      <p>Screenshots of the app</p>
+                      <p className="text-gray-400">built with React Native</p>
+                    </div>
+                  </div>
+                </Tooltip>
+              </li>
+            </ul>
+          </div>
+          <Briefcase size={48} className={"inline-block mr-24"} />
+          <div>
+            <h2 className="text-4xl mb-2">Professional Experience</h2>
+            <ul>
+              <li className="mt-3 mb-5">
+                <h2 className="text-xl">Engineering Manager @ Corra</h2>
+                <p>
+                  On the forefront of an exciting paradigm shift in the
+                  e-commerce industry, I lead the development of{" "}
+                  <a href="https://corra.com/lp/pylot/">Pylot</a>, a reference
+                  storefront for headless, composable commerce implementations.
+                  I&apos;ve had the pleasure of managing and mentoring a team of
+                  React and Node.js devs working on enterprise-level e-commerce
+                  implementations for clients. I also work with Corra&apos;s
+                  marketing, sales, and leadership teams to strategically grow
+                  our headless commerce portfolio. Please reach out to me,{" "}
+                  <a href="mailto:ajones@corra.com">ajones@corra.com</a>, or{" "}
+                  <a href="https://corra.com/contact/">via our website</a>, if
+                  you&apos;re looking for an SI to work with!
+                </p>
+              </li>
+            </ul>
+          </div>
+          <MessageCircle size={48} className={"inline-block mr-24"} />
+          <div>
+            <h2 className="text-4xl mb-2">Connect with Me</h2>
+            <ul className="flex">
+              <li className="mt-3 mb-5 mr-4">
+                <h2 className="text-xl">Email</h2>
+                <p>
+                  <a href="mailto:aej11@outlook.com">aej11@outlook.com</a>
+                </p>
+              </li>
+              <li className="mt-3 mb-5 mr-4">
+                <a
+                  href="https://www.linkedin.com/in/ajones55"
+                  className="no-underline"
+                >
+                  <h2 className="text-xl">LinkedIn</h2>
+                  <p>
+                    <Linkedin />
+                  </p>
+                </a>
+              </li>
+              <li className="mt-3 mb-5 mr-4">
+                <a href="https://github.com/aej11a" className="no-underline">
+                  <h2 className="text-xl">GitHub</h2>
+                  <p>
+                    <GitHub />
+                  </p>
+                </a>
+              </li>
+              <li className="mt-3 mb-5 mr-4">
+                <a
+                  href="https://twitter.com/ajones55555"
+                  className="no-underline"
+                >
+                  <h2 className="text-xl">Twitter</h2>
+                  <p>
+                    <Twitter />
+                  </p>
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
-
-        <div className={styles.center}>
-          <Image
-            className={styles.logo}
-            src="/next.svg"
-            alt="Next.js Logo"
-            width={180}
-            height={37}
-            priority
-          />
-          <div className={styles.thirteen}>
-            <Image
-              src="/thirteen.svg"
-              alt="13"
-              width={40}
-              height={31}
-              priority
-            />
-          </div>
-        </div>
-
-        <div className={styles.grid}>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Docs <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Find in-depth information about Next.js features and&nbsp;API.
-            </p>
-          </a>
-
-          <a
-            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Learn <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Learn about Next.js in an interactive course with&nbsp;quizzes!
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Templates <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Discover and deploy boilerplate example Next.js&nbsp;projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Deploy <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Instantly deploy your Next.js site to a shareable URL
-              with&nbsp;Vercel.
-            </p>
-          </a>
+        <div style={{ color: "#555" }} className="mt-8 mb-4">
+          &copy; Andrew Jones. Built with Next.js and Tailwind CSS.
         </div>
       </main>
     </>
-  )
+  );
 }
