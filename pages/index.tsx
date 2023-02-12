@@ -49,7 +49,7 @@ export default function Home({ articles }: { articles: DevDotToArticle[] }) {
           </h2>
         </div>
         <div className="pt-12" id="content-grid">
-          <Edit3 size={48} className={"inline-block mr-24"} />
+          <Edit3 size={48} className={"inline-block mr-8 lg:mr-24"} />
           <div>
             <h2 className="text-4xl mb-2">Writing</h2>
             <ul>
@@ -97,7 +97,7 @@ export default function Home({ articles }: { articles: DevDotToArticle[] }) {
               })}
             </ul>
           </div>
-          <Package size={48} className={"inline-block mr-24"} />
+          <Package size={48} className={"inline-block mr-8 lg:mr-24"} />
           <div>
             <h2 className="text-4xl mb-2">Projects</h2>
             <ul>
@@ -178,7 +178,7 @@ export default function Home({ articles }: { articles: DevDotToArticle[] }) {
               </li>
             </ul>
           </div>
-          <Briefcase size={48} className={"inline-block mr-24"} />
+          <Briefcase size={48} className={"inline-block mr-8 lg:mr-24"} />
           <div>
             <h2 className="text-4xl mb-2">Professional Experience</h2>
             <ul>
@@ -201,10 +201,10 @@ export default function Home({ articles }: { articles: DevDotToArticle[] }) {
               </li>
             </ul>
           </div>
-          <MessageCircle size={48} className={"inline-block mr-24"} />
+          <MessageCircle size={48} className={"inline-block mr-8 lg:mr-24"} />
           <div>
             <h2 className="text-4xl mb-2">Connect with Me</h2>
-            <ul className="flex">
+            <ul className="flex flex-wrap">
               <li className="mt-3 mb-5 mr-4">
                 <h2 className="text-xl">Email</h2>
                 <p>
