@@ -66,10 +66,11 @@ export default function Home({ articles }: { articles: DevDotToArticle[] }) {
                     <div className="flex mb-6">
                       <Heart color="#aaa" size={18} className="m-1" />{" "}
                       <span style={{ color: "#aaa" }} className="mr-2">
-                        {article.public_reactions_count} |{" "}
+                        {article.public_reactions_count}
+                        {/* {article.public_reactions_count} |{" "}
                         {new Date(article.readable_publish_date)
                           .toISOString()
-                          .substring(0, 10)}
+                          .substring(0, 10)} */}
                       </span>
                     </div>
                     <Tooltip anchorId={`article-${article.id}`}>
