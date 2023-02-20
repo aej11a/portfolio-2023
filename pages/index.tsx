@@ -12,7 +12,7 @@ import {
   Twitter,
 } from "react-feather";
 import { DevDotToArticle } from "@/types/devDotTo";
-import { Tooltip } from "react-tooltip";
+import Tippy from "@tippyjs/react";
 
 export const getStaticProps = async () => {
   const res = await fetch("https://dev.to/api/articles?username=ajones_codes");
@@ -54,26 +54,9 @@ export default function Home({ articles }: { articles: DevDotToArticle[] }) {
             <ul>
               {articles.map((article) => {
                 return (
-                  <li key={article.id} id={`article-${article.id}`}>
-                    <a
-                      href={article.canonical_url}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="text-lg no-underline hover:underline"
-                    >
-                      {article.title}
-                    </a>
-                    <div className="flex mb-6">
-                      <Heart color="#aaa" size={18} className="m-1" />{" "}
-                      <span style={{ color: "#aaa" }} className="mr-2">
-                        {article.public_reactions_count}
-                        {/* {article.public_reactions_count} |{" "}
-                        {new Date(article.readable_publish_date)
-                          .toISOString()
-                          .substring(0, 10)} */}
-                      </span>
-                    </div>
-                    <Tooltip anchorId={`article-${article.id}`}>
+                  <Tippy
+                    key={article.id}
+                    content={
                       <div className="bg-black w-[300px] rounded-md">
                         {article.cover_image ? (
                           <Image
@@ -91,8 +74,29 @@ export default function Home({ articles }: { articles: DevDotToArticle[] }) {
                           </p>
                         </div>
                       </div>
-                    </Tooltip>
-                  </li>
+                    }
+                  >
+                    <li id={`article-${article.id}`}>
+                      <a
+                        href={article.canonical_url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-lg no-underline hover:underline"
+                      >
+                        {article.title}
+                      </a>
+                      <div className="flex mb-6">
+                        <Heart color="#aaa" size={18} className="m-1" />{" "}
+                        <span style={{ color: "#aaa" }} className="mr-2">
+                          {article.public_reactions_count}
+                          {/* {article.public_reactions_count} |{" "}
+                        {new Date(article.readable_publish_date)
+                          .toISOString()
+                          .substring(0, 10)} */}
+                        </span>
+                      </div>
+                    </li>
+                  </Tippy>
                 );
               })}
             </ul>
@@ -101,30 +105,8 @@ export default function Home({ articles }: { articles: DevDotToArticle[] }) {
           <div>
             <h2 className="text-4xl mb-2">Projects</h2>
             <ul>
-              <li className="mt-3 mb-5">
-                <h2 className="text-xl">COVID-19 Research</h2>
-                <p>
-                  I led a research project on the system dynamics of the global
-                  spread of COVID-19, which culminated in{" "}
-                  <a
-                    href="https://doi.org/10.1016/j.chaos.2020.110376"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    a paper published
-                  </a>{" "}
-                  in an Elsevier journal. I developed{" "}
-                  <a
-                    href="https://chaotic-covid19.vercel.app/"
-                    target="_blank"
-                    rel="noreferrer"
-                    id="covid-dashboard"
-                  >
-                    a data analysis dashboard
-                  </a>{" "}
-                  in JavaScript which the project centered around.
-                </p>
-                <Tooltip anchorId="covid-dashboard">
+              <Tippy
+                content={
                   <div className="bg-black w-[300px] rounded-md">
                     <Image
                       src={"/covid_dashboard.png"}
@@ -140,25 +122,35 @@ export default function Home({ articles }: { articles: DevDotToArticle[] }) {
                       <p className="text-gray-400">built with React</p>
                     </div>
                   </div>
-                </Tooltip>
-              </li>
-              <li id="sharesheets-item" className="mb-5">
-                <h2 className="text-xl">ShareSheets</h2>
-                <p>
-                  ShareSheets allows users to share their contact information
-                  and social media accounts by creating and scanning QR codes.
-                  It is cross-platform (iPhone, iPad, and Android), and
-                  completely written in React Native using an Expo-managed
-                  workflow. Check it out on the{" "}
-                  <a href="https://apps.apple.com/tt/app/sharesheets/id1493143639">
-                    iOS App Store
-                  </a>{" "}
-                  or{" "}
-                  <a href="https://play.google.com/store/apps/details?id=com.aej11.sharesheets&hl=en_US&gl=US">
-                    Google Play Store.
-                  </a>
-                </p>
-                <Tooltip anchorId="sharesheets-item">
+                }
+              >
+                <li className="mt-3 mb-5">
+                  <h2 className="text-xl">COVID-19 Research</h2>
+                  <p>
+                    I led a research project on the system dynamics of the
+                    global spread of COVID-19, which culminated in{" "}
+                    <a
+                      href="https://doi.org/10.1016/j.chaos.2020.110376"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      a paper published
+                    </a>{" "}
+                    in an Elsevier journal. I developed{" "}
+                    <a
+                      href="https://chaotic-covid19.vercel.app/"
+                      target="_blank"
+                      rel="noreferrer"
+                      id="covid-dashboard"
+                    >
+                      a data analysis dashboard
+                    </a>{" "}
+                    in JavaScript which the project centered around.
+                  </p>
+                </li>
+              </Tippy>
+              <Tippy
+                content={
                   <div className="bg-black w-[300px] rounded-md">
                     <Image
                       src={"/sharesheets.png"}
@@ -174,8 +166,26 @@ export default function Home({ articles }: { articles: DevDotToArticle[] }) {
                       <p className="text-gray-400">built with React Native</p>
                     </div>
                   </div>
-                </Tooltip>
-              </li>
+                }
+              >
+                <li id="sharesheets-item" className="mb-5">
+                  <h2 className="text-xl">ShareSheets</h2>
+                  <p>
+                    ShareSheets allows users to share their contact information
+                    and social media accounts by creating and scanning QR codes.
+                    It is cross-platform (iPhone, iPad, and Android), and
+                    completely written in React Native using an Expo-managed
+                    workflow. Check it out on the{" "}
+                    <a href="https://apps.apple.com/tt/app/sharesheets/id1493143639">
+                      iOS App Store
+                    </a>{" "}
+                    or{" "}
+                    <a href="https://play.google.com/store/apps/details?id=com.aej11.sharesheets&hl=en_US&gl=US">
+                      Google Play Store.
+                    </a>
+                  </p>
+                </li>
+              </Tippy>
             </ul>
           </div>
           <Briefcase size={48} className={"inline-block mr-8 lg:mr-24"} />

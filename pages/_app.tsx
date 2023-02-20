@@ -1,5 +1,4 @@
 import "@/styles/globals.css";
-import "react-tooltip/dist/react-tooltip.css";
 import type { AppProps } from "next/app";
 import { Secular_One } from "@next/font/google";
 import ErrorBoundary from "../components/ErrorBoundary";
