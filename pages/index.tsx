@@ -34,14 +34,14 @@ export const getStaticProps = async () => {
       fetch("https://dev.to/reactions?article_id=" + article.id)
         .then((res) => res.json())
         .then((articleReactionsJson) => {
-          articleReactionCounts[article.id] =
-            articleReactionsJson.article_reaction_counts.reduce(
-              (sum, reactionType) => {
-                console.log(sum, reactionType);
-                return sum + reactionType.count;
-              },
-              0
-            );
+          articleReactionCounts[article.id] = (
+            articleReactionsJson.article_reaction_counts as Array<{
+              count: number;
+            }>
+          ).reduce<number>((sum, reactionType) => {
+            console.log(sum, reactionType);
+            return sum + reactionType.count;
+          }, 0);
         })
     );
   });
@@ -138,6 +138,37 @@ export default function Home({
           <div>
             <h2 className="text-4xl mb-2">Projects</h2>
             <ul>
+              <Tippy
+                content={
+                  <div className="bg-black w-[300px] rounded-md">
+                    <Image
+                      src={"/covid_dashboard.png"}
+                      alt={
+                        "COVID Dashboard screenshot showing graphs of COVID-19 data"
+                      }
+                      width={300}
+                      height={200}
+                      className="rounded-t-md"
+                    ></Image>
+                    <div className="p-2">
+                      <p>COVID-19 Research Dashboard</p>
+                      <p className="text-gray-400">built with React</p>
+                    </div>
+                  </div>
+                }
+              >
+                <li className="mt-3 mb-5">
+                  <h2 className="text-xl">Open-Source Full-Stack AI Chat</h2>
+                  <p>
+                    I developed a full-stack AI chat application similar to
+                    ChatGPT but with extra UI features like split-screen,
+                    searching messages, and message suggestions. This is a
+                    full-stack project built with Next.js, PlanetScaleDB, Clerk
+                    auth, and TailwindCSS. Since launching it, I have taken
+                    open-source contributions from other developers.
+                  </p>
+                </li>
+              </Tippy>
               <Tippy
                 content={
                   <div className="bg-black w-[300px] rounded-md">
