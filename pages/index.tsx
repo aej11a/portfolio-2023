@@ -275,7 +275,7 @@ export default function Home({
                       Penguin Plummet
                     </a>
                     , an iOS game written in SpriteKit and Swift - it started
-                    from a blank slate and I did all of the art myself! Next was
+                    from a blank slate and I did all of the art myself! Next was{" "}
                     <a href="https://apps.apple.com/us/app/space-station-run/id1425634808">Space Station: Run</a>, a 3D endless runner game developed with
                     Unreal Engine 4.
                   </p>
