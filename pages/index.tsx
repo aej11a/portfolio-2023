@@ -270,10 +270,14 @@ export default function Home({
                   <h2 className="text-xl">Mobile Game Development</h2>
                   <p>
                     I have published two quick-play-style mobile games. First
-                    was Penguin Plummet, an iOS game written in SpriteKit and
-                    Swift - it started from a blank slate and I did all of the
-                    art myself! Next was Space Station: Run, a 3D endless runner
-                    game developed with Unreal Engine 4.
+                    was{" "}
+                    <a href="https://apps.apple.com/us/app/penguin-plummet/id1315891487">
+                      Penguin Plummet
+                    </a>
+                    , an iOS game written in SpriteKit and Swift - it started
+                    from a blank slate and I did all of the art myself! Next was
+                    <a href="https://apps.apple.com/us/app/space-station-run/id1425634808">Space Station: Run</a>, a 3D endless runner game developed with
+                    Unreal Engine 4.
                   </p>
                 </li>
               </Tippy>
