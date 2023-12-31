@@ -78,7 +78,7 @@ export default function Home({
         <div className="container pt-24 border-b-2">
           <h1 className="text-6xl font-bold">Andrew Jones</h1>
           <h2 className="text-2xl mt-4 mb-2">
-            Software Engineer | Problem Solver | Teacher | Speaker
+            Software Engineer | Problem Solver | Writer
           </h2>
         </div>
         <div className="pt-12" id="content-grid">
@@ -163,9 +163,8 @@ export default function Home({
                     I developed a full-stack AI chat application similar to
                     ChatGPT but with extra UI features like split-screen,
                     searching messages, and message suggestions. This is a
-                    full-stack project built with Next.js, PlanetScaleDB, Clerk
-                    auth, and TailwindCSS. Since launching it, I have taken
-                    open-source contributions from other developers.
+                    full-stack open-source project built with Next.js,
+                    PlanetScaleDB, Clerk auth, and TailwindCSS.
                   </p>
                 </li>
               </Tippy>
@@ -250,6 +249,34 @@ export default function Home({
                   </p>
                 </li>
               </Tippy>
+              <Tippy
+                content={
+                  <div className="bg-black w-[300px] rounded-md">
+                    <Image
+                      src={"/penguinplummet.png"}
+                      alt={"Screenshot of one of my iOS games, Penguin Plummet"}
+                      width={300}
+                      height={200}
+                      className="rounded-t-md"
+                    ></Image>
+                    <div className="p-2">
+                      <p>Penguin Plummet</p>
+                      <p className="text-gray-400">built with SpriteKit</p>
+                    </div>
+                  </div>
+                }
+              >
+                <li className="mt-3 mb-5">
+                  <h2 className="text-xl">Mobile Game Development</h2>
+                  <p>
+                    I have published two quick-play-style mobile games. First
+                    was Penguin Plummet, an iOS game written in SpriteKit and
+                    Swift - it started from a blank slate and I did all of the
+                    art myself! Next was Space Station: Run, a 3D endless runner
+                    game developed with Unreal Engine 4.
+                  </p>
+                </li>
+              </Tippy>
             </ul>
           </div>
           <Briefcase size={48} className={"inline-block mr-8 lg:mr-24"} />
@@ -259,8 +286,7 @@ export default function Home({
               <li className="mt-3 mb-5">
                 <h2 className="text-xl">Engineering Manager @ Corra</h2>
                 <p>
-                  On the forefront of an exciting paradigm shift in the
-                  e-commerce industry, I lead the development of{" "}
+                  I lead the development of{" "}
                   <a href="https://corra.com/lp/pylot/">Pylot</a>, a reference
                   storefront for headless, composable commerce implementations.
                   I&apos;ve had the pleasure of managing and mentoring a team of
@@ -301,17 +327,6 @@ export default function Home({
                   <h2 className="text-xl">GitHub</h2>
                   <p>
                     <GitHub />
-                  </p>
-                </a>
-              </li>
-              <li className="mt-3 mb-5 mr-4">
-                <a
-                  href="https://twitter.com/ajones55555"
-                  className="no-underline"
-                >
-                  <h2 className="text-xl">Twitter</h2>
-                  <p>
-                    <Twitter />
                   </p>
                 </a>
               </li>
